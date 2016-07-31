@@ -13,6 +13,7 @@ window.addEventListener('load', () => {
 
 });
 
+
 //Map generator - it will be three difficulty settings, easy, med, & hard.
 class Map {
   constructor (public theMap:string, public difficulty:string){
