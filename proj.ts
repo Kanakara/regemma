@@ -22,3 +22,20 @@ let image = [1,1,1,1,1,1,1,1,1,1,1],
 
 
 }
+function drawBg()
+{
+  for(let r = 0; r < image.length; i++)
+  {
+      for(let c = 0; c < i[0].length; j++)
+      {
+        if(image[r][c] == 1)
+          {
+           
+          }
+        else if(image[r][c] ==9)
+        {
+           
+        }
+      }//for inner
+  }//for outer
+}
