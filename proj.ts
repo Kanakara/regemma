@@ -2,39 +2,89 @@
 let canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
 let ctx = canvas.getContext("2d");
 
-let xPos = 0;
-let yPos = 0;
+let width=550;
+let height=750;
+let playerImg = new Image();
+playerImg.src = 'images/eevee.png';
+let enemyImg = new Image()
+enemyImg.src = 'images/gir.png';
+//player eevee!
+let player = {
+  xPos:0,
+  yPos:0,
+};
 
-// get cat image
-let img = new Image();
-img.src = 'images/eevee.png';
+
+
+//Enemy Gir!!
+let enemyList = {};
+
+Enemy('g1',550,750,10,15);
+Enemy('g2',250,450,10,15);
+Enemy('g3',50,250,10,15);
+Enemy('g4',250,50,10,15);
+
+function Enemy(id,xPos:number,yPos:number,spdX:number,spdY:number)
+ {
+let enemy = {
+  xPos:xPos,
+  spdX:spdX,
+  yPos:yPos,
+  spdY:spdY,
+  id:id,
+};
+  enemyList[id] = enemy
+}
+
+
 
 //when all images loaded, start drawing
 window.addEventListener('load', () => {
-    ctx.drawImage(img, xPos, yPos, 45, 50);
-    ctx.stroke();
+    ctx.drawImage(playerImg, player.xPos, player.yPos, 50, 50);
 });
 
-function moveKey(direction) {
-
+function movePlayer(direction) {
       if (direction.keyCode == 38) {
-        yPos-=10;
+        player.yPos-=10;
         }
       if (direction.keyCode == 40) {
-        yPos+=10;
+        player.yPos+=10;
       }
       if (direction.keyCode == 37) {
-        xPos-=10;
+        player.xPos-=10;
       }
       if (direction.keyCode == 39) {
-        xPos+=10;
+        player.xPos+=10;
       }
       canvas.width = canvas.width;
       canvas.height = canvas.height;
-      ctx.drawImage(img, xPos, yPos, 45, 50);
+      ctx.drawImage(playerImg, player.xPos, player.yPos, 50, 50);
     };
+document.onkeydown = movePlayer;
 
-document.onkeydown = moveKey;
+setInterval(update, 100);
+
+//creating a move speed for the enemies to move
+function updateMove(move) {
+    move.xPos += move.spdX;
+    move.yPos += move.spdY;
+    ctx.drawImage(enemyImg, move.xPos, move.yPos, 50, 50);
+//making it to where the enemies will not move out of the canvas
+if (move.xPos < 0 || move.xPos > width) {
+  move.spdX = -move.spdX;
+  }
+if (move.yPos < 0 || move.yPos > height) {
+  move.spdY = -move.spdY;
+  }
+};
+
+function update(){
+  ctx.clearRect(0, 0, width+50, height+50);
+//cycles through the enemy list so that they will constantly move
+    for(let i in enemyList){
+    updateMove(enemyList[i]);
+  }
+};
 
 //Map generator - it will be three difficulty settings, easy, med, & hard.
 class Map {
