@@ -1,10 +1,32 @@
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext("2d");
+var xPos = 0;
+var yPos = 0;
 var img = new Image();
+img.src = 'images/eevee.png';
 window.addEventListener('load', function () {
-    img.src = 'BrainEaterRegEmma\images\cat.gif';
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img, xPos, yPos, 45, 50);
+    ctx.stroke();
 });
+function moveKey(direction) {
+    if (direction.keyCode == 38) {
+        yPos -= 10;
+    }
+    if (direction.keyCode == 40) {
+        yPos += 10;
+    }
+    if (direction.keyCode == 37) {
+        xPos -= 10;
+    }
+    if (direction.keyCode == 39) {
+        xPos += 10;
+    }
+    canvas.width = canvas.width;
+    canvas.height = canvas.height;
+    ctx.drawImage(img, xPos, yPos, 45, 50);
+}
+;
+document.onkeydown = moveKey;
 var Map = (function () {
     function Map(theMap, difficulty) {
         this.theMap = theMap;

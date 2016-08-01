@@ -2,17 +2,39 @@
 let canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
 let ctx = canvas.getContext("2d");
 
+let xPos = 0;
+let yPos = 0;
+
 // get cat image
 let img = new Image();
+img.src = 'images/eevee.png';
 
 //when all images loaded, start drawing
 window.addEventListener('load', () => {
-
-    img.src = 'BrainEaterRegEmma\images\cat.gif';
-    ctx.drawImage(img, 0, 0);
-
+    ctx.drawImage(img, xPos, yPos, 45, 50);
+    ctx.stroke();
 });
 
+function moveKey(direction) {
+
+      if (direction.keyCode == 38) {
+        yPos-=10;
+        }
+      if (direction.keyCode == 40) {
+        yPos+=10;
+      }
+      if (direction.keyCode == 37) {
+        xPos-=10;
+      }
+      if (direction.keyCode == 39) {
+        xPos+=10;
+      }
+      canvas.width = canvas.width;
+      canvas.height = canvas.height;
+      ctx.drawImage(img, xPos, yPos, 45, 50);
+    };
+
+document.onkeydown = moveKey;
 
 //Map generator - it will be three difficulty settings, easy, med, & hard.
 class Map {
